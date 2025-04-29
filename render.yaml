@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: veria-server
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn server:app"
+    region: oregon
+    plan: free
+    branch: main
+    autoDeploy: true
