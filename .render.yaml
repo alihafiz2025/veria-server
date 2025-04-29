@@ -3,5 +3,5 @@ services:
     name: veria-server
     env: python
     buildCommand: pip install -r requirements.txt
-    startCommand: python -m gunicorn server:app
+    startCommand: source /opt/render/project/venv/bin/activate && gunicorn server:app
     plan: free
