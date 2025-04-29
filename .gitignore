@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.env
+*.venv
+.env
+venv/
+env/
+
+# Kivy cache
+.kivy/
+.kivy-cache/
+
+# Build and distribution
+build/
+dist/
+*.egg-info/
+
+# VSCode / PyCharm
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# App folders you don't want in GitHub
+media/
+auth_archive/
+auth_scripts/
+inbox/
+inbox_metadata/
+
+# Credentials
+client_secret.json
+credentials2.json
+*.pyc
+__pycache__/
+
+
+# Misc
+*.log

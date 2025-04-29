@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: veria-server
+    env: python
+    buildCommand: ""
+    startCommand: gunicorn server:app
+    plan: free
