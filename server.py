@@ -6,6 +6,26 @@ import json
 from dotenv import load_dotenv
 from google.oauth2 import id_token
 from google.auth.transport import requests as google_requests
+from google.oauth2 import id_token
+from google.auth.transport import requests as grequests
+
+from flask import Flask, request, jsonify
+import os
+from google.oauth2 import id_token
+from google.auth.transport import requests as grequests
+
+app = Flask(__name__)
+
+# ✅ Step 2: Load and debug GOOGLE_CLIENT_ID
+GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
+print("Loaded GOOGLE_CLIENT_ID:", GOOGLE_CLIENT_ID)
+
+
+# Inside your upload route
+#try:
+    #idinfo = id_token.verify_oauth2_token(token, grequests.Request(), GOOGLE_CLIENT_ID)
+#except ValueError:
+    #return jsonify({'error': 'Invalid token'}), 400
 
 # Load environment variables
 load_dotenv()
@@ -54,7 +74,11 @@ def upload_image():
             print("[Server] Missing ID token in form")  # Debug log
             return jsonify({'error': 'Missing ID token'}), 400
 
-        idinfo = id_token.verify_oauth2_token(token, google_requests.Request(), GOOGLE_CLIENT_ID)
+        try:
+            idinfo = id_token.verify_oauth2_token(token, grequests.Request(), GOOGLE_CLIENT_ID)
+        except ValueError:
+            return jsonify({'error': 'Invalid token'}), 400
+        #idinfo = id_token.verify_oauth2_token(token, google_requests.Request(), GOOGLE_CLIENT_ID)
         sender_email_verified = idinfo['email']
 
         if 'image' not in request.files:
