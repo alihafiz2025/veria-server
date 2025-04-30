@@ -49,8 +49,9 @@ def verify_token():
 @app.route('/upload', methods=['POST'])
 def upload_image():
     try:
-        token = request.form.get('id_token')
+        token = request.form.get('id_token') or request.headers.get('Authorization')
         if not token:
+            print("[Server] Missing ID token in form")  # Debug log
             return jsonify({'error': 'Missing ID token'}), 400
 
         idinfo = id_token.verify_oauth2_token(token, google_requests.Request(), GOOGLE_CLIENT_ID)
