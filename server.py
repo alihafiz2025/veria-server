@@ -1,3 +1,4 @@
+#server.py
 from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 import os
@@ -18,6 +19,8 @@ app = Flask(__name__)
 
 # ✅ Step 2: Load and debug GOOGLE_CLIENT_ID
 GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
+GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
+
 print("Loaded GOOGLE_CLIENT_ID:", GOOGLE_CLIENT_ID)
 
 
@@ -54,7 +57,17 @@ def verify_token():
         if not token:
             return jsonify({'error': 'Missing token'}), 400
 
-        idinfo = id_token.verify_oauth2_token(token, google_requests.Request(), GOOGLE_CLIENT_ID)
+        #idinfo = id_token.verify_oauth2_token(token, google_requests.Request(), GOOGLE_CLIENT_ID)
+        # Allow multiple valid audiences (desktop + optional web client)
+        VALID_CLIENT_IDS = [
+            "809300011378-r823t8qtc9m3q0ib4etcsftatptcsajt.apps.googleusercontent.com",  # Desktop app
+            os.getenv("GOOGLE_CLIENT_ID")  # Optional: web client from .env
+        ]
+
+        idinfo = id_token.verify_oauth2_token(token, grequests.Request())
+        if idinfo["aud"] not in VALID_CLIENT_IDS:
+            raise ValueError("Invalid audience in token")
+
         return jsonify({
             'message': 'Token is valid',
             'user_id': idinfo['sub'],
