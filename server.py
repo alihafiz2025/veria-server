@@ -60,7 +60,7 @@ def verify_token():
         #idinfo = id_token.verify_oauth2_token(token, google_requests.Request(), GOOGLE_CLIENT_ID)
         # Allow multiple valid audiences (desktop + optional web client)
         VALID_CLIENT_IDS = [
-            "809300011378-r823t8qtc9m3q0ib4etcsftatptcsajt.apps.googleusercontent.com",  # Desktop app
+            "809300011378-36ff6k6gmcn1pjs094u1oifj394ef21c.apps.googleusercontent.com",  # Desktop app
             os.getenv("GOOGLE_CLIENT_ID")  # Optional: web client from .env
         ]
 
